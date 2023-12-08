@@ -10,12 +10,18 @@ const app = express()
 
 // db
 
+mongoose
+.connect(process.env.MONGODB_URI)
+.then(() => console.log("Database Connected."))
+.catch((err) => console.log(err));
+
+
 // middleware
 app.use(morgan('dev'));
 app.use(cors({ origin: true, credentials: true }))
 
 // port
-const port = 3000
+const port = process.env.PORT || 3000;
 
 // listners
 const server = app.listen(port , () => console.log(`server running on port http://localhost:${port}`))

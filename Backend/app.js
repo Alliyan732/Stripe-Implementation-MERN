@@ -20,6 +20,10 @@ mongoose
 app.use(morgan('dev'));
 app.use(cors({ origin: true, credentials: true }))
 
+// routes
+const testRoutes = require('./src/api/routes/test')
+app.use('/', testRoutes)
+
 // port
 const port = process.env.PORT || 3000;
 

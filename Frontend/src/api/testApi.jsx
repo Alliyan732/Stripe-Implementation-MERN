@@ -11,3 +11,13 @@ export const getTestData = async () => {
         console.log(error)
     }
 }
+
+export const getTestDbData = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/db_test`)
+        console.log(response)
+        return response.data
+    } catch (error) {
+        console.log(error)
+    }
+}

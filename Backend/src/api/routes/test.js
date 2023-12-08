@@ -12,6 +12,7 @@ var testController = require('../controllers/test');
 
 // api routes
 router.get('/test', testController.getTest);
+router.get('/db_test', testController.getDbTest);
 
 
 // export

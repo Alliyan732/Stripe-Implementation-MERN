@@ -1,15 +1,14 @@
 // imports
 const express = require('express')
 const mongoose = require('mongoose')
-const morgan = require('morgan')
-const cors = require('cors')
-require('dotenv').config()
+const morgan = require('morgan')      // logs the request, helps us during debugging and checking the results
+const cors = require('cors')          // for communication between the frontend and the backend
+require('dotenv').config()            // to store sensitive information, keys , that should not be uploaded on the repository
 
 // app
 const app = express()
 
 // db
-
 mongoose
 .connect(process.env.MONGODB_URI)
 .then(() => console.log("Database Connected."))
@@ -25,7 +24,7 @@ const testRoutes = require('./src/api/routes/test')
 app.use('/', testRoutes)
 
 // port
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 // listners
 const server = app.listen(port , () => console.log(`server running on port http://localhost:${port}`))

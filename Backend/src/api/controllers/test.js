@@ -3,7 +3,7 @@ exports.getTest = async (req, res, next) => {
     try {
 
         res.status(200).json({
-            message: "Apu is working!"
+            message: "Api is working!"
         });
 
     } catch (error) {

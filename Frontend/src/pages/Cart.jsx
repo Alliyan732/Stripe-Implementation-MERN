@@ -48,7 +48,7 @@ export default function Cart() {
                 return;
             } else {
                 const paymentMethod = result.paymentIntent.payment_method;
-                alert(`"Payment Successful! " + " amount: " + ${amount}`)
+                alert(`Payment Successful! Amount Paid: ${amount}`)
                 console.log("Payment Successful! " + " amount: " + amount)
             }
         } catch (error) {

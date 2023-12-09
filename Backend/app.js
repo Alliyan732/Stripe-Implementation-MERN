@@ -20,8 +20,8 @@ app.use(morgan('dev'));
 app.use(cors({ origin: true, credentials: true }))
 
 // routes
-const testRoutes = require('./src/api/routes/test')
-app.use('/', testRoutes)
+const stripeRoutes = require('./src/api/routes/stripe')
+app.use('/', stripeRoutes)
 
 // port
 const port = process.env.PORT || 8080;

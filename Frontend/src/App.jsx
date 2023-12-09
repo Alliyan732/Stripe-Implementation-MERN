@@ -1,43 +1,48 @@
-import React, {useState, useEffect} from 'react';
-import { getTestData } from './api/testApi';
-import { getTestDbData } from './api/testApi';
-function App() {
+import React, { useState, useEffect } from 'react';
+import Cart from './pages/Cart';
+import { getStripeApiKey } from "./api/stripeApi";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
 
-  const [data, setData] = useState(null)
-  const [dbData, setdbData] = useState([])
+function App() {
+  const [stripeApiKey, setStripeApiKey] = useState('');
 
   useEffect(() => {
-    getApiData();
-    getDbApiData();
-  },[])
+    getStripeApiKeyData();
+  }, []);
 
-
-  const getApiData = async () => {
+  const getStripeApiKeyData = async () => {
     try {
-      const response = await getTestData();
-      setData(response.message)
+      const { data } = await getStripeApiKey();
+      setStripeApiKey(data.stripeApiKey);
+      console.log(data.stripeApiKey);
     } catch (error) {
-      console.log(error)
+      console.error("Error fetching Stripe API key:", error);
     }
-  }
-  const getDbApiData = async () => {
-    try {
-      const response = await getTestDbData();
-      setdbData(response)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  };
 
   return (
-    <>
-    <h1 className="text-3xl font-bold underline text-center mt-10 mb-10">Response from backend (test data): {data}</h1>
-    <h1 className='text-center font-semibold mb-5 text-2xl'>db_test Data:</h1>
-    {dbData.map((usersData, index) => (
-    <p className='text-center' key={index}>{usersData.email}</p>
-  ))}
-    </>
-  ) 
+    <Router>
+      <Routes>
+
+        <Route
+          path="cart"
+          element={
+            stripeApiKey && (
+              <Elements stripe={loadStripe(stripeApiKey)}>
+                <Cart />
+              </Elements>
+            )
+          }
+        />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;

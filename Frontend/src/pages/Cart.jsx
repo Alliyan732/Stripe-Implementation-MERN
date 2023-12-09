@@ -48,6 +48,7 @@ export default function Cart() {
                 return;
             } else {
                 const paymentMethod = result.paymentIntent.payment_method;
+                alert(`"Payment Successful! " + " amount: " + ${amount}`)
                 console.log("Payment Successful! " + " amount: " + amount)
             }
         } catch (error) {

@@ -10,60 +10,53 @@ import {
     useElements,
 } from "@stripe/react-stripe-js";
 
-export default function Cart() {
 
-    const amount = 200;
+export default function Cart() {
 
     const stripe = useStripe();
     const elements = useElements();
+    const amount = 200;
 
     const placeOrder = async (event) => {
-
-        // Handling payment
-        event.preventDefault();
-    
-    
-        if (!stripe || !elements) {
-          // Stripe not yet loaded
-          return;
-        }
-    
-        try {
-          const { data } = await axios.post(
-            "http://localhost:8080/process_payment",
        
-              amount
-      
-          );
-    
-          const client_secret = data.client_secret;
-    
-          const result = await stripe.confirmCardPayment(client_secret, {
-            payment_method: {
-              card: elements.getElement(CardNumberElement),
-              billing_details: {
-                name: 'Stripe Implementation Mern',
-              },
-            },
-          });
-    
-          if (result.error) {
-            // Handle payment error
-            console.error(result.error.message);
-            alert(result.error.message)
+        event.preventDefault();
+
+        if (!stripe || !elements) {
             return;
-    
-          } else {
-            // Payment successful, you can send the paymentMethod to your server if necessary
-            const paymentMethod = result.paymentIntent.payment_method;
-          }
-        } catch (error) {
-          console.error(error);
-          alert("payment Unseccessful!")
-          return;
         }
-      };
-    
+
+        try {
+            const { data } = await axios.post(
+                "http://localhost:8080/process_payment",
+                { amount: amount } 
+            );
+
+            const client_secret = data.client_secret;
+
+            const result = await stripe.confirmCardPayment(client_secret, {
+                payment_method: {
+                    card: elements.getElement(CardNumberElement),
+                    billing_details: {
+                        name: 'Stripe Implementation Mern',
+                    },
+                },
+            });
+
+            if (result.error) {
+                console.error(result.error.message);
+                alert(result.error.message);
+                return;
+            } else {
+                const paymentMethod = result.paymentIntent.payment_method;
+                console.log("Payment Successful! " + " amount: " + amount)
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Payment Unsuccessful!");
+            return;
+        }
+    };
+
 
     const cardElementStyle = {
         base: {

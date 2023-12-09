@@ -18,6 +18,7 @@ mongoose
 // middleware
 app.use(morgan('dev'));
 app.use(cors({ origin: true, credentials: true }))
+app.use(express.json());
 
 // routes
 const stripeRoutes = require('./src/api/routes/stripe')

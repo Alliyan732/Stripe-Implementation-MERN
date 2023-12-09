@@ -16,7 +16,7 @@ Before you start, make sure you have the following installed:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/Stripe-Implementation-MERN/mern-stripe.git
+    git clone https://github.com/Alliyan732/Stripe-Implementation-MERN
     ```
 
 2. Change into the project directory:
